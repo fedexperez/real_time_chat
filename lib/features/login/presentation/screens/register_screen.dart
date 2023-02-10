@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:real_time_chat/features/login/presentation/widgets/widgets.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,14 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Logo(),
+                  Logo(
+                    title: 'Registro',
+                  ),
                   _Form(),
                   Labels(
-                    route: 'register',
-                    title: '¿No tienes cuenta?',
-                    subtitle: 'Crea una ahora!',
+                    route: 'login',
+                    title: '¿Ya tienes una cuenta?',
+                    subtitle: 'Ingresa ahora!',
                   ),
                   Text('Terminos y condiciones'),
                 ],
@@ -57,9 +59,39 @@ class _Form extends StatelessWidget {
             hintText: 'Clave',
           ),
           CustomFilledFormButton(
-            buttonText: 'Ingresar',
+            buttonText: 'Registrarme',
             onPressed: () {},
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Labels extends StatelessWidget {
+  const _Labels({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          const Text(
+            '¿Ya tienes una cuenta?',
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 15,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, 'login');
+              },
+              child: const Text(
+                'Ingresa ahora!',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              )),
         ],
       ),
     );
