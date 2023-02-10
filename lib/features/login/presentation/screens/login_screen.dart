@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:real_time_chat/features/login/presentation/widgets/custom_filled_form_button.dart';
-import 'package:real_time_chat/features/login/presentation/widgets/custom_text_field.dart';
+import 'package:real_time_chat/features/login/presentation/widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  _Logo(),
+                  Logo(),
                   _Form(),
                   _Labels(),
                   Text('Terminos y condiciones'),
@@ -29,32 +28,6 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Logo extends StatelessWidget {
-  const _Logo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          children: [
-            Container(
-              height: size.height * 0.15,
-              margin: const EdgeInsets.only(bottom: 10),
-              child: const Image(
-                image: AssetImage('assets/icon/tag-logo.png'),
-              ),
-            ),
-            const Text('Messenger', style: TextStyle(fontSize: 30)),
-          ],
         ),
       ),
     );
