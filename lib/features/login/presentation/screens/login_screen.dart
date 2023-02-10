@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
 }
 
 class _Form extends StatelessWidget {
-  const _Form({super.key});
+  const _Form();
 
   @override
   Widget build(BuildContext context) {

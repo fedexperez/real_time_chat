@@ -14,28 +14,25 @@ class Labels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.black54,
-              fontSize: 15,
-              fontWeight: FontWeight.w300,
-            ),
+    return Column(
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            color: Colors.black54,
+            fontSize: 15,
+            fontWeight: FontWeight.w300,
           ),
-          TextButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, route);
-              },
-              child: Text(
-                subtitle,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              )),
-        ],
-      ),
+        ),
+        TextButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, route);
+            },
+            child: Text(
+              subtitle,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            )),
+      ],
     );
   }
 }

@@ -20,7 +20,7 @@ class Logo extends StatelessWidget {
                 image: AssetImage('assets/icon/tag-logo.png'),
               ),
             ),
-            Text(title!, style: TextStyle(fontSize: 30)),
+            Text(title!, style: const TextStyle(fontSize: 30)),
           ],
         ),
       ),
