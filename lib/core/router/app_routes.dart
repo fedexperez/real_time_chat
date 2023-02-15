@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:real_time_chat/features/chat/presentation/screens/chat_screen.dart';
 import 'package:real_time_chat/features/chat/presentation/screens/users_screen.dart';
 
 import 'package:real_time_chat/features/authentication/presentation/screens/login_screen.dart';
@@ -11,5 +12,6 @@ class AppRoutes {
     'login': (BuildContext context) => const LoginScreen(),
     'register': (BuildContext context) => const RegisterScreen(),
     'users': (BuildContext context) => const UsersScreen(),
+    'chat': (BuildContext context) => const ChatScreen(),
   };
 }
