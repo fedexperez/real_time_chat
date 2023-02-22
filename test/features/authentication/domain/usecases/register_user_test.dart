@@ -13,7 +13,7 @@ import 'login_user_test.mocks.dart';
 @GenerateMocks([AuthenticationRepository])
 void main() {
   late RegisterUser usecase;
-  late MockUserRepository mockUserRepository;
+  late MockAuthenticationRepository mockUserRepository;
   late String name;
   late String email;
   late String password;
@@ -21,7 +21,7 @@ void main() {
   late User user;
 
   setUp(() {
-    mockUserRepository = MockUserRepository();
+    mockUserRepository = MockAuthenticationRepository();
     usecase = RegisterUser(repository: mockUserRepository);
     name = 'Fernando';
     email = 'test3@test.com';
