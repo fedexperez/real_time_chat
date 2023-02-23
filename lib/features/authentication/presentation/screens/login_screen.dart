@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:real_time_chat/features/authentication/presentation/blocs/login/login_bloc.dart';
 import 'package:real_time_chat/features/authentication/presentation/widgets/widgets.dart';
-import 'package:real_time_chat/injection_container.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -53,7 +52,6 @@ class _Form extends StatelessWidget {
         listener: (context, state) {
           if (state is LoginLoadedState) {
             Navigator.popAndPushNamed(context, 'register');
-            print('logged');
           }
           if (state is LoginErrorState) {
             showDialog(
@@ -89,8 +87,6 @@ class _Form extends StatelessWidget {
                   onPressed: () {
                     // final bloc = sl<LoginBloc>();
                     // final bloc = context.read<LoginBloc>();
-                    print(emailCtrl.text);
-                    print(passCtrl.text);
                     bloc.add(
                       LogUserEvent(
                         email: emailCtrl.text,
@@ -142,8 +138,6 @@ class _Form extends StatelessWidget {
                 CustomFilledFormButton(
                   buttonText: 'Ingresar',
                   onPressed: () {
-                    print(emailCtrl.text);
-                    print(passCtrl.text);
                     bloc.add(
                       LogUserEvent(
                         email: emailCtrl.text,

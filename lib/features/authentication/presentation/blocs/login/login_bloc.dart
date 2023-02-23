@@ -27,7 +27,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             errorMessage: Constants.serverFailureMessage,
           ));
         }
-        print('error state emitido');
       }, (authentication) {
         emit(LoginLoadedState(user: authentication.user));
       });

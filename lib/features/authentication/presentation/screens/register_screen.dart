@@ -56,7 +56,6 @@ class _Form extends StatelessWidget {
         listener: (context, state) {
           if (state is RegisterLoadedState) {
             Navigator.popAndPushNamed(context, 'login');
-            print('registred');
           }
           if (state is RegisterErrorState) {
             if (state.errorMessage == Constants.connectionFailureMessage) {
@@ -65,7 +64,7 @@ class _Form extends StatelessWidget {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text(state.errorMessage),
-                    content: Text('Revisa tu conexion'),
+                    content: const Text('Revisa tu conexion'),
                   );
                 },
               );
@@ -76,7 +75,7 @@ class _Form extends StatelessWidget {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text(state.errorMessage),
-                    content: Text(
+                    content: const Text(
                         'Revisa si el correo que intentas utilizar ya esta registrado, de lo contrario revisa que la clave sea correcta'),
                   );
                 },
@@ -112,8 +111,6 @@ class _Form extends StatelessWidget {
                   onPressed: () {
                     // final bloc = sl<LoginBloc>();
                     // final bloc = context.read<LoginBloc>();
-                    print(emailCtrl.text);
-                    print(passwordCtrl.text);
                     bloc.add(
                       RegisterUserEvent(
                         name: nameCtrl.text,
@@ -178,8 +175,6 @@ class _Form extends StatelessWidget {
                 CustomFilledFormButton(
                   buttonText: 'Registrarme',
                   onPressed: () {
-                    print(emailCtrl.text);
-                    print(passwordCtrl.text);
                     bloc.add(
                       RegisterUserEvent(
                         name: nameCtrl.text,
