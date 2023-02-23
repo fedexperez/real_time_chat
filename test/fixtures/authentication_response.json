@@ -1,0 +1,10 @@
+{
+    "ok": true,
+    "user": {
+        "name": "Fernando",
+        "email": "test3@test.com",
+        "online": false,
+        "uid": "fftt"
+    },
+    "token": "testToken"
+}
