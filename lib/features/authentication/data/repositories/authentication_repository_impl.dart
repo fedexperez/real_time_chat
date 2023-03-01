@@ -9,11 +9,11 @@ import 'package:real_time_chat/features/authentication/domain/repositories/authe
 
 class AuthenticationRepositoryImpl extends AuthenticationRepository {
   final AuthenticationRemoteDataSource authenticationRemoteDataSource;
-  final SecureStorageImpl secureStorageImpl;
+  final SecureStorage secureStorage;
 
   AuthenticationRepositoryImpl({
     required this.authenticationRemoteDataSource,
-    required this.secureStorageImpl,
+    required this.secureStorage,
   });
 
   @override
@@ -22,7 +22,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     try {
       final authenticationResponse =
           await authenticationRemoteDataSource.loginUser(email, password);
-      secureStorageImpl.secureUserToken(
+      secureStorage.secureUserToken(
         tokenToSecure: authenticationResponse.token,
       );
       return Right(authenticationResponse);
@@ -46,7 +46,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
         email,
         password,
       );
-      secureStorageImpl.secureUserToken(
+      secureStorage.secureUserToken(
         tokenToSecure: registerResponse.token,
       );
       return Right(registerResponse);
@@ -60,7 +60,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   @override
   Future<Either<Failure, AuthenticationResponse>> checkLoggedUser() async {
     try {
-      final userToken = await secureStorageImpl.getSecuredUserToken();
+      final userToken = await secureStorage.getSecuredUserToken();
       final checkResponse =
           await authenticationRemoteDataSource.checkLoggedUser(userToken);
       return Right(checkResponse);
