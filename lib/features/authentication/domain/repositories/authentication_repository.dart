@@ -14,4 +14,6 @@ abstract class AuthenticationRepository {
     String email,
     String password,
   );
+
+  Future<Either<Failure, AuthenticationResponse>> checkLoggedUser();
 }
