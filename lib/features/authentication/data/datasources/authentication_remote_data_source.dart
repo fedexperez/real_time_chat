@@ -9,6 +9,7 @@ abstract class AuthenticationRemoteDataSource {
   Future<AuthenticationResponseModel> loginUser(String email, String password);
   Future<AuthenticationResponseModel> registerUser(
       String name, String email, String password);
+  Future<AuthenticationResponseModel> checkLoggedUser(String userToken);
 }
 
 class AuthenticationRemoteDataSourceImpl
@@ -41,19 +42,27 @@ class AuthenticationRemoteDataSourceImpl
     }
   }
 
-  // @override
-  // Future<UserModel> loginUser(String email, String password) async {
-  //   final jsonData = await _postJsonData(
-  //     '/api/login',
-  //     {
-  //       'email': email,
-  //       'password': password,
-  //     },
-  //   );
-  //   final response = AuthenticationResponseModel.fromJson(jsonData);
-  //   final loggedUser = response.user as UserModel;
-  //   return loggedUser;
-  // }
+  Future<String> _getJsonData(
+    String endPoint,
+    String userToken,
+  ) async {
+    try {
+      final url = Uri.http(_baseUrl, endPoint);
+      final response = await http.get(
+        url,
+        headers: {'x-token': userToken},
+      );
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        throw ServerException();
+      }
+    } on ServerException {
+      throw ServerException();
+    } catch (error) {
+      throw ConnectionException();
+    }
+  }
 
   @override
   Future<AuthenticationResponseModel> loginUser(
@@ -69,22 +78,6 @@ class AuthenticationRemoteDataSourceImpl
     return response;
   }
 
-  // @override
-  // Future<UserModel> registerUser(
-  //     String name, String email, String password) async {
-  //   final jsonData = await _postJsonData(
-  //     '/api/login/new',
-  //     {
-  //       'name': name,
-  //       'email': email,
-  //       'password': password,
-  //     },
-  //   );
-  //   final response = AuthenticationResponseModel.fromJson(jsonData);
-  //   final loggedUser = response.user as UserModel;
-  //   return loggedUser;
-  // }
-
   @override
   Future<AuthenticationResponseModel> registerUser(
       String name, String email, String password) async {
@@ -96,6 +89,13 @@ class AuthenticationRemoteDataSourceImpl
         'password': password,
       },
     );
+    final response = AuthenticationResponseModel.fromJson(jsonData);
+    return response;
+  }
+
+  @override
+  Future<AuthenticationResponseModel> checkLoggedUser(String userToken) async {
+    final jsonData = await _getJsonData('/api/login/renew', userToken);
     final response = AuthenticationResponseModel.fromJson(jsonData);
     return response;
   }
