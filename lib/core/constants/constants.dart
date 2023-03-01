@@ -1,4 +1,5 @@
 class Constants {
-  static const serverFailureMessage = 'SERVER FAILURE';
-  static const connectionFailureMessage = 'CONNECTION FAILURE';
+  static const String serverFailureMessage = 'SERVER FAILURE';
+  static const String connectionFailureMessage = 'CONNECTION FAILURE';
+  static const String token = 'token';
 }
