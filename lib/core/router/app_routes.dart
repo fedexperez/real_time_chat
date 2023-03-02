@@ -4,7 +4,7 @@ import 'package:real_time_chat/features/authentication/presentation/screens/logi
 import 'package:real_time_chat/features/authentication/presentation/screens/register_screen.dart';
 
 class AppRoutes {
-  static const initialRoute = 'register';
+  static const initialRoute = 'login';
 
   static final Map<String, Widget Function(BuildContext)> routes = {
     'login': (BuildContext context) => const LoginScreen(),

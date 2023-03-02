@@ -28,25 +28,3 @@ class LoginErrorState extends LoginState {
   @override
   List<Object> get props => [errorMessage];
 }
-
-class RegisterInitialState extends LoginState {}
-
-class RegisterLoadingState extends LoginState {}
-
-class RegisterLoadedState extends LoginState {
-  final User user;
-
-  const RegisterLoadedState({required this.user});
-
-  @override
-  List<Object> get props => [user];
-}
-
-class RegisterErrorState extends LoginState {
-  final String errorMessage;
-
-  const RegisterErrorState({required this.errorMessage});
-
-  @override
-  List<Object> get props => [errorMessage];
-}

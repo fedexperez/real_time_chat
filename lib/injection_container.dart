@@ -1,6 +1,9 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:real_time_chat/core/secure_storage/secure_storage.dart';
+import 'package:real_time_chat/features/authentication/domain/usecases/check_logged_user.dart';
 import 'package:real_time_chat/features/authentication/presentation/blocs/login/login_bloc.dart';
 import 'package:real_time_chat/features/authentication/data/repositories/authentication_repository_impl.dart';
 import 'package:real_time_chat/features/authentication/data/datasources/authentication_remote_data_source.dart';
@@ -11,20 +14,24 @@ import 'package:real_time_chat/features/authentication/presentation/blocs/regist
 
 final sl = GetIt.instance;
 
-// void init() async {
 Future<void> init() async {
   ///Features
   //Bloc
-  sl.registerFactory(() => LoginBloc(loginUser: sl()));
+  sl.registerFactory(() => LoginBloc(loginUser: sl(), checkLoggedUser: sl()));
   sl.registerFactory(() => RegisterBloc(registerUser: sl()));
 
   //Usecases
   sl.registerLazySingleton(() => LoginUser(repository: sl()));
   sl.registerLazySingleton(() => RegisterUser(repository: sl()));
+  sl.registerLazySingleton(() => CheckLoggedUser(repository: sl()));
 
   //Repository
   sl.registerLazySingleton<AuthenticationRepository>(
-      () => AuthenticationRepositoryImpl(authenticationRemoteDataSource: sl()));
+    () => AuthenticationRepositoryImpl(
+      authenticationRemoteDataSource: sl(),
+      secureStorage: sl(),
+    ),
+  );
 
   //Data
   sl.registerLazySingleton<AuthenticationRemoteDataSource>(
@@ -32,11 +39,9 @@ Future<void> init() async {
   );
 
   ///Core
-  // sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  sl.registerLazySingleton<SecureStorage>(() => SecureStorageImpl(sl()));
 
   ///External
-  ///Now SharedPreferences are type shared preferences an not type Future
-  // final sharedPreferences = await SharedPreferences.getInstance();
-  // sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => http.Client());
+  sl.registerLazySingleton(() => const FlutterSecureStorage());
 }

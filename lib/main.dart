@@ -22,7 +22,7 @@ class AppState extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoginBloc>(
-          create: (context) => sl<LoginBloc>(),
+          create: (context) => sl<LoginBloc>()..add(LoginTokenCheckEvent()),
         ),
         BlocProvider<RegisterBloc>(
           create: (context) => sl<RegisterBloc>(),

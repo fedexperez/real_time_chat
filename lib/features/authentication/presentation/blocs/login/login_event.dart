@@ -16,3 +16,5 @@ class LogUserEvent extends LoginEvent {
   @override
   List<Object> get props => [email, password];
 }
+
+class LoginTokenCheckEvent extends LoginEvent {}

@@ -85,8 +85,6 @@ class _Form extends StatelessWidget {
                 CustomFilledFormButton(
                   buttonText: 'Ingresar',
                   onPressed: () {
-                    // final bloc = sl<LoginBloc>();
-                    // final bloc = context.read<LoginBloc>();
                     bloc.add(
                       LogUserEvent(
                         email: emailCtrl.text,
