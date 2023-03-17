@@ -55,5 +55,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginLoadedState(user: authentication.user));
       });
     });
+
+    on<LogoutUserEvent>((event, emit) {
+      emit(LoginInitialState());
+    });
   }
 }

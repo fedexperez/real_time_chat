@@ -18,3 +18,5 @@ class LogUserEvent extends LoginEvent {
 }
 
 class LoginTokenCheckEvent extends LoginEvent {}
+
+class LogoutUserEvent extends LoginTokenCheckEvent {}

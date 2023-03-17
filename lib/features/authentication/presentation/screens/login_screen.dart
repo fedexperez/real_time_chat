@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:real_time_chat/features/authentication/presentation/blocs/login/login_bloc.dart';
 import 'package:real_time_chat/features/authentication/presentation/widgets/widgets.dart';
+import 'package:real_time_chat/features/chat/presentation/blocs/chat/chat_bloc.dart';
+import 'package:real_time_chat/features/chat/presentation/blocs/user/user_bloc.dart';
+import 'package:real_time_chat/features/chat/presentation/blocs/users/users_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -51,7 +54,9 @@ class _Form extends StatelessWidget {
       child: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginLoadedState) {
-            Navigator.popAndPushNamed(context, 'register');
+            context.read<UserBloc>().add(const UserConnectionEvent());
+            context.read<UsersBloc>().add(const UsersGetEvent());
+            Navigator.popAndPushNamed(context, 'users', arguments: state.user);
           }
           if (state is LoginErrorState) {
             showDialog(
