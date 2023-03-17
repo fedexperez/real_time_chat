@@ -15,3 +15,5 @@ class ServerFailure extends Failure {}
 class ConnectionFailure extends Failure {}
 
 class TokenFailure extends Failure {}
+
+class SocketFailure extends Failure {}
