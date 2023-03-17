@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:real_time_chat/features/chat/presentation/blocs/chat/chat_bloc.dart';
+import 'package:real_time_chat/features/chat/presentation/blocs/message/message_bloc.dart';
+
+import 'package:real_time_chat/features/chat/presentation/blocs/user/user_bloc.dart';
+import 'package:real_time_chat/features/chat/presentation/blocs/users/users_bloc.dart';
 import 'injection_container.dart' as di;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +31,18 @@ class AppState extends StatelessWidget {
         ),
         BlocProvider<RegisterBloc>(
           create: (context) => sl<RegisterBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<UserBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<UsersBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<ChatBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<MessageBloc>(),
         ),
       ],
       child: const MyApp(),
