@@ -4,18 +4,20 @@ import 'package:real_time_chat/features/chat/domain/entities/message.dart';
 
 class BubbleMessage extends StatelessWidget {
   final Message message;
+  final String userId;
   final AnimationController animationController;
 
   const BubbleMessage({
     super.key,
     required this.message,
     required this.animationController,
+    required this.userId,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: message.userId == '123'
+      child: message.fromUser == userId
           ? _MyMessage(message: message.text)
           : _NotMyMessage(message: message.text),
     );

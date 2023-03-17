@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:real_time_chat/features/chat/domain/entities/message.dart';
+import 'package:real_time_chat/features/chat/presentation/blocs/chat/chat_bloc.dart';
+import 'package:real_time_chat/features/chat/presentation/blocs/message/message_bloc.dart';
+import 'package:real_time_chat/features/chat/presentation/widgets/bubble_message.dart';
 
 class TextBox extends StatefulWidget {
   const TextBox({super.key});
@@ -7,7 +12,7 @@ class TextBox extends StatefulWidget {
   State<TextBox> createState() => _TextBoxState();
 }
 
-class _TextBoxState extends State<TextBox> {
+class _TextBoxState extends State<TextBox> with TickerProviderStateMixin {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   bool _isWriting = false;
@@ -22,8 +27,6 @@ class _TextBoxState extends State<TextBox> {
             Flexible(
               child: TextField(
                 controller: _textController,
-                //Recibe el post, en nuestro caso deberia de ser
-                //un evento que recibe el event.text
                 onSubmitted: _handleSubmit,
                 onChanged: (String text) {
                   setState(() {
@@ -39,15 +42,59 @@ class _TextBoxState extends State<TextBox> {
                 focusNode: _focusNode,
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              child: IconButton(
-                  onPressed: (_isWriting
-                      ? () {
-                          return _handleSubmit(_textController.text.trim());
-                        }
-                      : null),
-                  icon: const Icon(Icons.send)),
+            BlocBuilder<ChatBloc, ChatState>(
+              builder: (context, state) {
+                if (state is ChatLoadingState) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    child: IconButton(
+                        onPressed: (_isWriting
+                            ? () {
+                                context
+                                    .read<MessageBloc>()
+                                    .add(MessageSendEvent(
+                                      message: Message(
+                                        text: _textController.text,
+                                        fromUser: state.submitterUser.uid,
+                                        toUser: state.receptorUser.uid,
+                                      ),
+                                    ));
+                                return _handleSubmit(
+                                  _textController.text.trim(),
+                                );
+                              }
+                            : null),
+                        icon: const Icon(Icons.send)),
+                  );
+                }
+                if (state is ChatLoadedState) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    child: IconButton(
+                        onPressed: (_isWriting
+                            ? () {
+                                context
+                                    .read<MessageBloc>()
+                                    .add(MessageSendEvent(
+                                      message: Message(
+                                        text: _textController.text,
+                                        fromUser: state.submitterUser.uid,
+                                        toUser: state.receptorUser.uid,
+                                      ),
+                                    ));
+                                return _handleSubmit(
+                                  _textController.text.trim(),
+                                );
+                              }
+                            : null),
+                        icon: const Icon(Icons.send)),
+                  );
+                }
+                if (state is ChatErrorState) {
+                  return Text(state.errorMessage);
+                }
+                return Container();
+              },
             )
           ],
         ),
@@ -56,6 +103,12 @@ class _TextBoxState extends State<TextBox> {
   }
 
   void _handleSubmit(String text) {
+    // final newMessage = BubbleMessage(
+    //   message: Message(text: text, fromUser: '123', toUser: '1234'),
+    //   animationController:
+    //       AnimationController(vsync: this, duration: Duration(seconds: 1)),
+    // );
+
     _textController.clear();
     _focusNode.requestFocus();
     setState(() {
